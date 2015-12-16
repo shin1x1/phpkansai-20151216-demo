@@ -11,10 +11,8 @@
 |
 */
 /**
- * @var Router $router
+ * @var Router
  */
-
-
 use Illuminate\Routing\Router;
 use Shin1x1\Book\Domain\BookRepository;
 

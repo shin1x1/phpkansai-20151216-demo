@@ -16,6 +16,7 @@ class BookRepository implements BookRepositoryInterface
 
     /**
      * BookRepository constructor.
+     *
      * @param Book $eloquent
      */
     public function __construct(Book $eloquent)
