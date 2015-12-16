@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Repository\Eloquent\BookRepository;
 
 class FooController extends Controller
