@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\Eloquent\BookRepository;
+use Shin1x1\Book\Domain\BookRepository;
 
-class FooController extends Controller
+class FooController extends Controller {
+public function books(BookRepository $repository)
 {
-    /**
-     * FooController constructor.
-     */
-    public function __construct(BookRepository $repository)
-    {
-        $repository->resolveAll();
-    }
+return $repository->resolveAll();
+}
 }
