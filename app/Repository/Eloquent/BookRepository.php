@@ -16,6 +16,7 @@ class BookRepository implements BookRepositoryInterface
 
     /**
      * BookRepository constructor.
+     *
      * @param Book $eloquent
      */
     public function __construct(Book $eloquent)
@@ -26,7 +27,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * @return array
      */
-    public function resolveAll(): array
+    public function resolveAll()
     {
         return $this->eloquent->orderBy('id')->get()->toArray();
     }

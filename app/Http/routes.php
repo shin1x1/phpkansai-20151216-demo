@@ -13,13 +13,15 @@
 /**
  * @var Router $router
  */
-
-
 use Illuminate\Routing\Router;
 use Shin1x1\Book\Domain\BookRepository;
 
 $router->get('/', function () {
     return view('welcome');
+});
+
+$router->get('/hello', function () {
+    return response()->json('hello');
 });
 
 $router->get('/error', function () {
