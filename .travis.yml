@@ -6,11 +6,11 @@ php:
 
 branches:
   only:
-    - master
-    - /deploy\/.+/
+  - master
+  - /deploy\/.+/
 
 addons:
-  postgresql: "9.4"
+  postgresql: 9.4
 
 services:
   - postgresql
@@ -26,15 +26,15 @@ script:
   - php artisan key:generate
   - ./vendor/bin/phpunit
 
+notifications:
+  slack:
+    secure: JXvJ4pZhiSP/30VCJK8kC9XWlroE9LeGfNhk8dz9TxwuTFcIry9WmFp2hdsy08AZhXm5f53uutvFhEAnwRRGXHpZfdlUVKuP/JEsEQOCEojIsxdNkYxrMvMuhy1hjaivbxMTqJj4jGjBQwNMWjHWUAExBgF8kxDHUBzI07t/gs+sjwl77xbU3PYRhNRKXVT+s+TnOG1FWwc+pgifSsGNknF/BRIQ9zSqbKwfmo3qHjVZCVwTg7rqYiWDKvZOh7nSHXjuUuqmSP9kRCNwJAfYlkMy2y5MMkUBC3Js67pdTBvD9hO9TE82OgpBEVcn1dDe13H2iYYXZLQ+LTVJ7GOiscjW+P8/lTk/V63LIBIQ+e7WZ9FsfiIUcWlihs2B1oJCONLM91p/jXw+VXY4gN0OSPGDY/xcElGA2VmRKqc7C34vNV7OeL51Np3aaKKjl6rZorRjtjRA+Ka+h8Xga/zI49OWQMWntxJYx32wcAK+ig6zkdrtHKOr1cVRwwDdwO+2z5Wmvmqxb6MD+BG22i6ALFKHGsYBfv1q0Nojd+/6mzPTcMd8xiGBNSASldS8BXtxqUnwwZ0vgh9yWApvVQxtjcs/cThHA5sPXy9wZHQcfsNIyh42jvKVuM+/Ua4eEBDG+INA0ZUBkMmMUspb+lNovpbE5pJXWFB70z6UiVTkrCo=
+
 deploy:
   provider: heroku
   api_key:
-    secure: QywEejUmfBBmlOaKkc88Ib1aMamWVOuhpju88D50gBXwEja+Uhq9mD4SDAYItWINwbXPGjufzviG4I6hj22QgvCAWig+Re+cCgMVK/nZltgcXeqc66B6kW2vhPOuQGJwMnl3gcQ+5V8tMOMD+h7J9oTcNemmSlJP2tlbKuivlC0q5mySMwf/+ISnf4vT3WLo/uDCGkb/AerTyp3cdvS0VWg/rcIB/7coKcjHVZNsTq5MzXe3Ti+BMgA00TNZcXvqPVR36UA1U/MJYlGMa1pu3k+cMS4b4c13QS2KwmIQQqrQe6Wd8JSiHwVPqP5m0j62Ko+XxCUdttRDpkA/lQhBEgI10EJD3dZ3kRETSFQC/CPEVghaM15PMPQ/ZLk26zOEkBVrAzojK8um95dPSktA3+CWSbpx++jF+FV6/dXjGHJxBgTfdg3kuY9erFyIG1z7K/PHHEnDjjr7qDA7hSZJvUrkZP2dWzozllbKUVbkvjIBZ4xR5biVzN9dFqJ996tzp3LmkYUWPvKDW6PvBpYhQoqlqXSKJKYVPKLW+S+uCj+YEhlzzjlxBStNcOKOy0Vn7b+Dp3TEPEYo41gDjDiHDbLogzyDrVbwBgrOeuAOJFaSCmD2ACG2DufPCOW0P3uiW6krfIubGWKO/9aATa3mhUxhAzAjqWFAzIF5+558WeE=
+    secure: QyFiKzyaiI+J21n5inlahv1AN+G20P44TpvATvrOI/zJ2yLZ141R1aiwFtCf/zsQvJpBf4rHlxwtVgjaL8LYLzxykSGYY7jrxGWYAav6vmK2El9NbL24DW33M1mOrs0KiBO10PF1j91ht8jtiQpz/qgM7pz2yVHRMKmRohZkPRznAgccZ8tBxoFn0It5E/R+yYgBuWlRDn1OYgsy9UnBIHPots12qaeY1rVDQbgefZQWKOgU3b1Qnrp168LPHbEI5Kv7KqnsfYurqql3liie4DrUXeyHAM4CJTb2OsKGHrWvwUcja+df9qME3BchqaQLPfQinX5nd0mVzbrjvvdcQdFI/OrI2bZCmrjKYMzmQSCYWmMq1Dt3HKhVp6Jjbo+T/p5a93Oolzah42fEkoSe40FtEdsO626rrbMycOPJzL19vNQDEcuzZit75TmPR36ZqijfGeMb7/xHBG4rYi5tLBCFHSZu2br9r1fGt339kJD5tG9DLJmdHnvG1gGiPPC8TNHsnBTuTcCPeMz01AHprSkP5K9dA4TAXVPFhwjSoCRWE9w+F7pfndH0KJWgBAQbvNDdqqdSqS4aMGkWxeGD2wsjC4LNc2NpvB0Q/2eD2zFSYgYR60maahJ6iu3eamqWxPlxnk2TisWjb/lDORqsBYEF8RJvPR57miez+oeXxPs=
   app:
     deploy/staging: phpkansai-20151216
   run:
-    - "php artisan migrate --force"
-
-notifications:
-  slack:
-    secure: L0FTt5YFXrcJoodes30ZEmrMOF2v4YCcCSXlwwLeGvxCgBvbZtTsgYjKup18hB91oyvS//tQ+Dvu+ucnuojFS4qwEuxhZUnSNTF4QsyiR3VqfILvmw7HW98/5qeNi5/zzMUTJhL38opkSp1AkF4OxeLXkzdlsGfYD4GwRcnMpVyRJX0oUTcehUh+oddlhKbFKLOwrM1zLiAatKWVGSSTCpjOOlNQ1qZsf/h+I2CeL5wayKlqmVGVlGYxJCYnkwnTAQcgswMdhi5gN73jYQXu/IKge5zFkCPbwhWubZdWtwWWIq1w8rZJNEcZIvplek/I0q5NixN7jcmNRgleykQ8NyuDv/Zo9AOPLUTBuDvU6UhtH/5kxDkRIknBUTqr7U7mqWhhekZ4iF7OqxTDksSlfk6hV75EMkygbgperLMZgfSXDHl70pWXoNXRNKb/PJpwf8erf+JfKTcjjnMNpAcRn49zyZucN9Fep04kktNTE9IL42kttC0pT1i0Y2dk6l1ERUzqjqW+uVPYhbFVCNl9xTRqDLp+PDC5+7oAJiEZeUhJm3Y2RRiaJVG9cDc2xhhIc96yRs8nnkh94i5yP7cjlr7OLu4Pjy/G8WrdOiRBtUgAD+kK2Gk2/2kHzIEKu8Fxsej8ufOnyGIruy/JITuW//joRjoOw7FqhWHFjB/Xzjc=
+    - php artisan migrate --force
