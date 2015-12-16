@@ -7,7 +7,7 @@ php:
 branches:
   only:
   - master
-  - /deploy\\/.+/
+  - /deploy\/.+/
 
 addons:
   postgresql: 9.4
