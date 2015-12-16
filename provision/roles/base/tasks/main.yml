@@ -1,0 +1,15 @@
+---
+- name: Disalbe and stop iptables
+  service: name=iptables state=stopped enabled=no
+
+- name: Install ntp
+  yum: name=ntp
+
+- name: Enable and start ntp
+  service: name=ntpd state=started enabled=yes
+
+- name: Install base packages
+  yum: name={{ item }}
+  with_items:
+    - git
+    - vim

@@ -1,0 +1,35 @@
+---
+- name: Install PostgreSQL yum repository
+  yum: name=http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-2.noarch.rpm
+
+- name: Install PostgreSQL
+  yum: name={{ item }}
+  with_items:
+    - python-psycopg2
+    - postgresql94-server
+    - postgresql94
+
+- name: Initialize PostgreSQL database
+  command: su postgres -c '/usr/pgsql-9.4/bin/initdb --no-locale -D /var/lib/pgsql/9.4/data' creates=/var/lib/pgsql/9.4/data/postgresql.conf
+
+- name: Upload postgresql.conf
+  copy: src=postgresql.conf dest=/var/lib/pgsql/9.4/data/postgresql owner=postgres group=postgres mode=0600 backup=yes
+  notify:
+    - Restart PostgreSQL
+
+- name: Upload pg_hba.conf
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/9.4/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
+  notify:
+    - Restart PostgreSQL
+
+- name: Enable and start PostgreSQL
+  service: name=postgresql-9.4 state=started enabled=yes
+
+- name: Create PostgreSQL user
+  postgresql_user: name={{ postgresql_user_name }} role_attr_flags=CREATEDB,NOSUPERUSER
+
+- name: Create PostgreSQL app database
+  postgresql_db: name={{ item }} login_user={{ postgresql_user_name }} encoding=UTF-8 template=template0
+  with_items:
+    - app
+    - app_test

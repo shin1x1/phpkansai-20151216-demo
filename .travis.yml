@@ -1,0 +1,40 @@
+language: php
+sudo: false
+
+php:
+  - 7.0
+
+branches:
+  only:
+    - master
+    - /deploy\/.+/
+
+addons:
+  postgresql: "9.4"
+
+services:
+  - postgresql
+
+before_script:
+  - composer self-update
+  - cp .env.example .env
+
+script:
+  - composer install --prefer-source --no-interaction --dev
+  - psql -c 'CREATE USER vagrant WITH CREATEDB;' -U postgres
+  - psql -c 'CREATE DATABASE app_test;' -U vagrant postgres
+  - php artisan key:generate
+  - ./vendor/bin/phpunit
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: QywEejUmfBBmlOaKkc88Ib1aMamWVOuhpju88D50gBXwEja+Uhq9mD4SDAYItWINwbXPGjufzviG4I6hj22QgvCAWig+Re+cCgMVK/nZltgcXeqc66B6kW2vhPOuQGJwMnl3gcQ+5V8tMOMD+h7J9oTcNemmSlJP2tlbKuivlC0q5mySMwf/+ISnf4vT3WLo/uDCGkb/AerTyp3cdvS0VWg/rcIB/7coKcjHVZNsTq5MzXe3Ti+BMgA00TNZcXvqPVR36UA1U/MJYlGMa1pu3k+cMS4b4c13QS2KwmIQQqrQe6Wd8JSiHwVPqP5m0j62Ko+XxCUdttRDpkA/lQhBEgI10EJD3dZ3kRETSFQC/CPEVghaM15PMPQ/ZLk26zOEkBVrAzojK8um95dPSktA3+CWSbpx++jF+FV6/dXjGHJxBgTfdg3kuY9erFyIG1z7K/PHHEnDjjr7qDA7hSZJvUrkZP2dWzozllbKUVbkvjIBZ4xR5biVzN9dFqJ996tzp3LmkYUWPvKDW6PvBpYhQoqlqXSKJKYVPKLW+S+uCj+YEhlzzjlxBStNcOKOy0Vn7b+Dp3TEPEYo41gDjDiHDbLogzyDrVbwBgrOeuAOJFaSCmD2ACG2DufPCOW0P3uiW6krfIubGWKO/9aATa3mhUxhAzAjqWFAzIF5+558WeE=
+  app:
+    deploy/staging: phpkansai-20151216
+  run:
+    - "php artisan migrate --force"
+
+notifications:
+  slack:
+    secure: L0FTt5YFXrcJoodes30ZEmrMOF2v4YCcCSXlwwLeGvxCgBvbZtTsgYjKup18hB91oyvS//tQ+Dvu+ucnuojFS4qwEuxhZUnSNTF4QsyiR3VqfILvmw7HW98/5qeNi5/zzMUTJhL38opkSp1AkF4OxeLXkzdlsGfYD4GwRcnMpVyRJX0oUTcehUh+oddlhKbFKLOwrM1zLiAatKWVGSSTCpjOOlNQ1qZsf/h+I2CeL5wayKlqmVGVlGYxJCYnkwnTAQcgswMdhi5gN73jYQXu/IKge5zFkCPbwhWubZdWtwWWIq1w8rZJNEcZIvplek/I0q5NixN7jcmNRgleykQ8NyuDv/Zo9AOPLUTBuDvU6UhtH/5kxDkRIknBUTqr7U7mqWhhekZ4iF7OqxTDksSlfk6hV75EMkygbgperLMZgfSXDHl70pWXoNXRNKb/PJpwf8erf+JfKTcjjnMNpAcRn49zyZucN9Fep04kktNTE9IL42kttC0pT1i0Y2dk6l1ERUzqjqW+uVPYhbFVCNl9xTRqDLp+PDC5+7oAJiEZeUhJm3Y2RRiaJVG9cDc2xhhIc96yRs8nnkh94i5yP7cjlr7OLu4Pjy/G8WrdOiRBtUgAD+kK2Gk2/2kHzIEKu8Fxsej8ufOnyGIruy/JITuW//joRjoOw7FqhWHFjB/Xzjc=

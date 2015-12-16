@@ -1,0 +1,3 @@
+---
+setup_application_root: /vagrant
+setup_application_laravel_env: local

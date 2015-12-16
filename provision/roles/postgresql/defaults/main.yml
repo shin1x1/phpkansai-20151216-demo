@@ -1,0 +1,3 @@
+---
+postgresql_user_name: vagrant
+postgresql_user_password: pass

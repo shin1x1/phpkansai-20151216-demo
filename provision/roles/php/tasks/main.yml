@@ -1,0 +1,51 @@
+---
+- name: Install PHP
+  yum: name={{ item }} enablerepo=remi-php70
+  with_items:
+    - php
+    - php-cli
+    - php-pdo
+    - php-mbstring
+    - php-mcrypt
+    - php-xml
+    - php-devel
+    - php-common
+    - php-pgsql
+    - php-pear
+    - php-pecl-xdebug
+    - php-pecl-zip
+    - php-opcache
+    - php-json
+    - httpd
+
+- name: Create logfile
+  file: path=/var/log/php.log state=touch mode=0666
+
+- name: Upload zzmyphp.ini
+  template: src=zzmyphp.ini.j2 dest=/etc/php.d/zzmyphp.ini owner=root group=root mode=0644 backup=yes
+  notify:
+    - Restart httpd
+
+- name: Upload httpd.conf
+  template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf owner=root group=root mode=0644 backup=yes
+  notify:
+    - Restart httpd
+
+- name: Upload vhost.conf
+  template: src=vhost.conf.j2 dest=/etc/httpd/conf.d/vhost.conf owner=root group=root mode=0644 backup=yes
+  notify:
+    - Restart httpd
+
+- name: Enable and start httpd
+  service: name=httpd state=started enabled=yes
+
+- name: Install composer.phar
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin creates=/usr/bin/composer
+
+- name: Rename composer.phar to composer
+  command: mv /usr/bin/composer.phar /usr/bin/composer creates=/usr/bin/composer
+
+- name: Add idekey setting to ~/.bashrc
+  lineinfile: dest=/home/vagrant/.bashrc state=present regexp='^export PHP_IDE_CONFIG="serverName={{ php_remote_name }}"' line='export PHP_IDE_CONFIG="serverName={{ php_remote_name }}"'
+  when: php_remote_debug
+
