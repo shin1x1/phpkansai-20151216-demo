@@ -7,5 +7,5 @@ interface BookRepository
     /**
      * @return array
      */
-    public function resolveAll(): array;
+    public function resolveAll();
 }
