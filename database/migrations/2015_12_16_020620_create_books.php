@@ -12,7 +12,7 @@ class CreateBooks extends Migration
      */
     public function up()
     {
-        Schema::create('books', function(Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
             $table->string('asin')->unique();
             $table->string('name');
