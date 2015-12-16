@@ -15,7 +15,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * @return array
      */
-    public function resolveAll(): array
+    public function resolveAll()
     {
         return $this->data;
     }
