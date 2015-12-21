@@ -7,8 +7,8 @@ use Unused;
 
 class FooController extends Controller
 {
-public function books(BookRepository $repository)
-{
-$repository->resolveAll();
-}
+    public function books(BookRepository $repository)
+    {
+        $repository->resolveAll();
+    }
 }
