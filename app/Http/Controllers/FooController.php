@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Symfony\Component\HttpKernel\Tests\Controller;
+use App\Repository\Eloquent\BookRepository;
+use Unused;
 
 class FooController extends Controller
 {
-public function index()
-{
-return response('hoge');
-}
+    public function books(BookRepository $repository)
+    {
+        $repository->resolveAll();
+    }
 }
