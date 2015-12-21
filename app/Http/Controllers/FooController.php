@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Repository\Eloquent\BookRepository;
+use Unused;
 
 class FooController extends Controller
 {
-    /**
-     * FooController constructor.
-     */
-    public function __construct(BookRepository $repository)
-    {
-        $repository->resolveAll();
-    }
+public function books(BookRepository $repository)
+{
+$list = array(1,2,3);
+$repository->resolveAll();
+}
 }
